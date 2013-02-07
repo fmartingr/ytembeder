@@ -43,7 +43,16 @@ YT.prototype =
         onStateChange: ->
     element: 'ytvideo'
     embedMode: null
+    debug: true
+    player: null # YT Player object
     api: null # TODO
+
+    ##
+    #   INTERNALS
+    ##
+    log: (message, type='log') ->
+        if window.console and window.console.log and @debug
+            console.log "[%s] YTEmbeder: %s", type, message
 
     haveVideoTag: ->
         !!document.createElement('video').canPlayType
@@ -55,31 +64,34 @@ YT.prototype =
             flashObject = new ActiveXObject 'ShockwaveFlash.ShockwaveFlash'
             hasFlash = true if flashObject
         catch e
-            hasFlash = true if navigator.mimeTypes["application/x-shockwave-flash"] != undefined
+            hasFlash = true if navigator.mimeTypes["application/x-shockwave-flash"] isnt undefined
         hasFlash
 
     embedScript: ->
-        tag = document.createElement 'script'
-        tag.src = "https://www.youtube.com/player_api"
-        firstScriptTag = document.getElementsByTagName('script')[0]
-        firstScriptTag.parentNode.insertBefore tag, firstScriptTag
+        if window._ytapiready is undefined
+            tag = document.createElement 'script'
+            tag.src = "https://www.youtube.com/player_api"
+            firstScriptTag = document.getElementsByTagName('script')[0]
+            firstScriptTag.parentNode.insertBefore tag, firstScriptTag
+            window._ytapiready = false
+            window.onYouTubePlayerAPIReady = =>
+                window._ytapiready = true
+                @log 'API ready'
 
-    createCallback: ->
-        window.player = null
-        window.onYouTubePlayerAPIReady = =>
-            window.player = new YT.Player @element, @options
+    embedVideo: ->
+        @player = new YT.Player @element, @options
 
     getEmbedMode: ->
         @embedMode = 'html5' if @haveVideoTag()
         @embedMode = 'flash' if @embedMode is null and @haveFlash()
+        @
 
     start: ->
         @getEmbedMode()
         if @embedMode isnt null
             @embedScript()
-            @createCallback()
         else
-            console.error 'Browser do not support flash or html5!'
+            @log 'Browser do not support flash or html5!', 'error'
         @
 
     init: (options) ->
@@ -90,9 +102,28 @@ YT.prototype =
         else if type is "string"
             # String, so only video ID
             @options.videoId = options
-        else
-            console.error 'YTEmbeder: No options provided!'
         @start()
 
+    ##
+    #   HELPERS
+    ##
+    setVideo: (id) ->
+        @options.videoId = id
+        @
+
+    setSize: (width, height) ->
+        @options.width = parseInt width
+        @options.height = parseInt height
+        @
+
+    embed: (element) ->
+        if not window._ytapiready
+            setTimeout =>
+                @embed element
+            , 200    
+        else
+            @element = element
+            @embedVideo()
+        @
 
 window.YT = YT
