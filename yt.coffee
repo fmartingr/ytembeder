@@ -109,9 +109,22 @@ YT.prototype =
     ##
     #   HELPERS
     ##
+    lazy: (id, width, height, modestUI=true) ->
+        @setVideo id
+        @setSize width, height
+        if modestUI
+            @setControls false
+            @setInfo false
+            @setAutoplay true
+            @setModestBranding true
+        @
+
     setVideo: (id) ->
         @options.videoId = id
         @
+
+    setModestBranding: (bool) ->
+        @options.playerVars.modestbranding = Number bool
 
     setSize: (width, height) ->
         @options.width = parseInt width
