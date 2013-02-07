@@ -17,34 +17,34 @@ YT.prototype =
             width: 640
             height: 480
             videoId: ''
-        @playerVars =
-            autohide: 0
-            autoplay: 0
-            cc_load_policy: 0
-            color: 0
-            controls: 0
-            disablekb: 0
-            enablejsapi: 0
-            end: 0
-            fs: 0
-            iv_load_policy: 0
-            list: 0
-            listType: 0
-            loop: 0
-            modestbranding: 0
-            origin: 0
-            playerapiid: 0
-            playlist: 0
-            rel: 0
-            showinfo: 0
-            start: 0
-            theme: 0
-        @events =
-            onReady: ->
-            onStateChange: ->
+            playerVars:
+                autohide: 2
+                #autoplay: 0
+                #cc_load_policy: 1
+                #color: 0
+                #controls: 1
+                #disablekb: 0
+                enablejsapi: 0
+                #end: null
+                #fs: 1
+                #iv_load_policy: 1
+                #list: null
+                #listType: null
+                #loop: 0
+                #modestbranding: 0
+                #origin: null
+                #playerapiid: null
+                #playlist: null
+                #rel: 1
+                #showinfo: 0
+                #start: 0
+                #theme: 'dark'
+            events:
+                onReady: ->
+                onStateChange: ->
         @element = 'ytvideo'
         @embedMode = null
-        @debug = true
+        @debug = false
         @player = null # YT Player object
         @api = null # TODO
 
@@ -116,6 +116,22 @@ YT.prototype =
     setSize: (width, height) ->
         @options.width = parseInt width
         @options.height = parseInt height
+        @
+
+    setControls: (bool) ->
+        @options.playerVars.controls = Number bool
+        @
+
+    setInfo: (bool) ->
+        @options.playerVars.showinfo = Number bool
+        @
+
+    setAutoplay: (bool) ->
+        @options.playerVars.autoplay = Number bool
+        @
+
+    allowFullscreen: (bool) ->
+        @options.playerVars.fs = Number bool
         @
 
     embed: (element) ->
