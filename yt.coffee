@@ -12,40 +12,41 @@ YT = (_options) ->
         @init _options
 
 YT.prototype = 
-    options:
-        width: 640
-        height: 480
-        videoId: ''
-    playerVars:
-        autohide: 0
-        autoplay: 0
-        cc_load_policy: 0
-        color: 0
-        controls: 0
-        disablekb: 0
-        enablejsapi: 0
-        end: 0
-        fs: 0
-        iv_load_policy: 0
-        list: 0
-        listType: 0
-        loop: 0
-        modestbranding: 0
-        origin: 0
-        playerapiid: 0
-        playlist: 0
-        rel: 0
-        showinfo: 0
-        start: 0
-        theme: 0
-    events:
-        onReady: ->
-        onStateChange: ->
-    element: 'ytvideo'
-    embedMode: null
-    debug: true
-    player: null # YT Player object
-    api: null # TODO
+    __construct: ->
+        @options =
+            width: 640
+            height: 480
+            videoId: ''
+        @playerVars =
+            autohide: 0
+            autoplay: 0
+            cc_load_policy: 0
+            color: 0
+            controls: 0
+            disablekb: 0
+            enablejsapi: 0
+            end: 0
+            fs: 0
+            iv_load_policy: 0
+            list: 0
+            listType: 0
+            loop: 0
+            modestbranding: 0
+            origin: 0
+            playerapiid: 0
+            playlist: 0
+            rel: 0
+            showinfo: 0
+            start: 0
+            theme: 0
+        @events =
+            onReady: ->
+            onStateChange: ->
+        @element = 'ytvideo'
+        @embedMode = null
+        @debug = true
+        @player = null # YT Player object
+        @api = null # TODO
 
     ##
     #   INTERNALS
@@ -102,6 +103,7 @@ YT.prototype =
         else if type is "string"
             # String, so only video ID
             @options.videoId = options
+        @__construct()
         @start()
 
     ##
