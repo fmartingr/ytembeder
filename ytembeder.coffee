@@ -24,7 +24,6 @@ YT.prototype =
                 #color: 0
                 #controls: 1
                 #disablekb: 0
-                enablejsapi: 0
                 #end: null
                 #fs: 1
                 #iv_load_policy: 1
@@ -33,7 +32,6 @@ YT.prototype =
                 #loop: 0
                 #modestbranding: 0
                 #origin: null
-                #playerapiid: null
                 #playlist: null
                 #rel: 1
                 #showinfo: 0
