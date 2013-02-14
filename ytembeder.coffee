@@ -44,6 +44,8 @@ YT.prototype =
                 onStateChange: ->
         @element = 'ytvideo'
         @embedMode = null
+        @supportHTML5 = false
+        @supportFlash = false
         @debug = false
         @debug = true if window._ytembeder_debug
         @player = null # YT Player object
@@ -84,8 +86,10 @@ YT.prototype =
         @player = new YT.Player @element, @options
 
     getEmbedMode: ->
-        @embedMode = 'html5' if @haveVideoTag()
-        @embedMode = 'flash' if @embedMode is null and @haveFlash()
+        @supportHTML5 = @haveVideoTag()
+        @supportFlash = @haveFlash()
+        @embedMode = 'html5' if @supportHTML5
+        @embedMode = 'flash' if @supportFlash  # If user have flash and html5 yt uses flash
         @
 
     start: ->
