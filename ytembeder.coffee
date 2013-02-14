@@ -45,6 +45,7 @@ YT.prototype =
         @element = 'ytvideo'
         @embedMode = null
         @debug = false
+        @debug = true if window._ytembeder_debug
         @player = null # YT Player object
         @api = null # TODO
 
