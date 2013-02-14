@@ -157,6 +157,26 @@ YT.prototype =
         @options.playerVars.fs = Number bool
         @
 
+    ##
+    # API CONTROLS
+    ##
+
+    play: ->
+        if @player
+            @player.playVideo()
+
+    pause: ->
+        if @player
+            @player.pauseVideo()
+
+    stop: ->
+        if @player
+            @player.stopVideo()
+
+    ##
+    # EMBEDING
+    ##
+
     embed: (element) ->
         if not window._ytapiready
             setTimeout =>
