@@ -124,6 +124,13 @@ YT.prototype =
             @setModestBranding true
         @
 
+    forceHTML5: ->
+        if @supportHTML5
+            @options.playerVars.html5 = 1
+        else
+            @log 'This browser does not support HTML5!'
+        @
+
     setVideo: (id) ->
         @options.videoId = id
         @
