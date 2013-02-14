@@ -4,7 +4,7 @@ ytembeder
 A easy tool to embed your youtube videos with the [embed api](https://developers.google.com/youtube/js_api_reference).
 
 ## Flash or HTML5?
-Both. The Script checks for flash or html5 **before** loading the youtube API. If none present, nothing is loaded and the developer can show some message to the user. Youtube prioritices Flash over HTML, but you can override the choice using the method `forceHTM5()`.
+Both. The Script checks for flash or html5 **before** loading the youtube API. If none present, nothing is loaded and the developer can show some message to the user. Youtube prioritices Flash over HTML, but you can override the choice using the method `forceHTML5()`.
 
 Obviusly it won't work if the player don't support it, and will use flash instead -if present-.
 
